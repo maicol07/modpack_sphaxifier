@@ -1,0 +1,14 @@
+<RCC>
+  <qresource>
+    <file>img/spaceship.svg</file>
+    <file>img/folder.svg</file>
+    <file>img/help.svg</file>
+    <file>img/refresh.svg</file>
+    <file>img/logo.png</file>
+    <file>img/check.svg</file>
+    <file>img/gear.svg</file>
+    <file>img/info.svg</file>
+    <file>img/log-out.svg</file>
+    <file>img/qt.svg</file>
+  </qresource>
+</RCC>
