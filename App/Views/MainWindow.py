@@ -10,6 +10,7 @@ from PySide2.QtCore import QSettings, Qt
 from PySide2.QtWidgets import QMessageBox, QProgressDialog, QListWidgetItem, QFileDialog
 from dotted_dict import DottedDict
 
+from App.Views.CreditsEditor import CreditsEditor
 from App.Views.Settings import Settings
 from App.Views.Window import get_window
 from includes.helpers import data, setting, path
@@ -43,8 +44,6 @@ class MainWindow(Window):
     def __init__(self):
         super().__init__('main')
 
-        self.settings = Settings()
-
         # Start Button
         self.pushButton_Start.clicked.connect(self.pack)
 
@@ -69,7 +68,9 @@ class MainWindow(Window):
         # Menu Bar
         self.actionExit.triggered.connect(self.close)
 
-        self.actionSettings.triggered.connect(self.open_settings)
+        self.actionSettings.triggered.connect(lambda: Settings().show())
+
+        self.actionCredits_editor.triggered.connect(lambda: CreditsEditor().show())
 
         self.actionSupport.triggered.connect(lambda: webbrowser.open('https://maicol07.it/#contact'))
         self.actionAbout.triggered.connect(self.open_info)
@@ -178,7 +179,7 @@ class MainWindow(Window):
             return
 
         # Progress window
-        progress = QProgressDialog("Saving selections...", "Abort", 0, 100, self)
+        progress = QProgressDialog("Saving selections... 1/5", "Abort", 0, 100, self)
         progress.setWindowModality(Qt.WindowModal)
         # noinspection PyUnresolvedReferences
         progress.canceled.connect(lambda: QMessageBox.information(progress, 'Pack building aborted',
@@ -201,7 +202,7 @@ class MainWindow(Window):
         if progress.wasCanceled():
             return
 
-        progress.setLabelText("Copying files to pack... 2/4")
+        progress.setLabelText("Copying files to pack... 2/5")
 
         # Add Minecraft and Forge Directory
         if os.path.exists(os.path.join(setting('patches_folder'), pack_version, pack_res, 'minecraft')):
@@ -246,7 +247,7 @@ class MainWindow(Window):
         if progress.wasCanceled():
             return
 
-        progress.setLabelText("Zipping... 3/4")
+        progress.setLabelText("Zipping... 3/5")
 
         # Make zip
         filename = QFileDialog.getSaveFileName(self,
@@ -256,7 +257,7 @@ class MainWindow(Window):
                                                    version=pack_version,
                                                    name=pack_name
                                                )), 'ZIP Archives (*.zip)')
-        archive = ZipFile(filename[0], 'w', ZIP_DEFLATED, strict_timestamps=False)
+        archive = ZipFile(filename[0], 'w', ZIP_DEFLATED)  # strict_timestamps=False if Python >= 3.8
         for root, dirs, files in os.walk(data(self.temp_folder_name)):
             for file in files:
                 path = os.path.join(root, file)
@@ -270,7 +271,19 @@ class MainWindow(Window):
         if progress.wasCanceled():
             return
 
-        progress.setLabelText("Cleaning... 4/4")
+        if os.path.exists(data('credits.json')):
+            progress.setLabelText("Writing credits... 4/5")
+            txt = open(os.path.join(setting('pack_credits'), 'credits.txt'), 'w')
+            file = open(data('credits.json'))
+            saved = json.loads(file.read())
+            final = ["{}: {}".format(slug, text) for slug, text in saved.items()]
+            txt.writelines(final)
+
+        progress.setValue(75)
+        if progress.wasCanceled():
+            return
+
+        progress.setLabelText("Cleaning... 5/5")
 
         # Delete Temp folder
         shutil.rmtree(self.temp_folder_name)
@@ -293,12 +306,6 @@ class MainWindow(Window):
         version.close()
         html.close()
 
-    def open_settings(self):
-        """
-        Settings
-        """
-        self.settings.show()
-
     def __stubs(self):
         """ This just enables code completion. It should never be called """
         self.MainWindow = QtWidgets.QMainWindow()
@@ -320,6 +327,7 @@ class MainWindow(Window):
         self.menuFile = QtWidgets.QMenu()
         self.menuEdit = QtWidgets.QMenu()
         self.menuHelp = QtWidgets.QMenu()
+        self.menuTools = QtWidgets.QMenu()
         self.statusbar = QtWidgets.QStatusBar()
         self.actionExit = QtWidgets.QAction()
         self.actionSettings = QtWidgets.QAction()
@@ -327,4 +335,5 @@ class MainWindow(Window):
         self.actionSupport = QtWidgets.QAction()
         self.actionAbout_Qt = QtWidgets.QAction()
         self.actionAbout = QtWidgets.QAction()
+        self.actionCredits_editor = QtWidgets.QAction()
         raise AssertionError("This should never be called")
