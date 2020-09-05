@@ -3,11 +3,10 @@ import os
 import shutil
 import webbrowser
 from distutils import file_util, dir_util
-from io import BytesIO
 from zipfile import ZipFile, ZIP_DEFLATED
 
 from PySide2 import QtWidgets
-from PySide2.QtCore import QSettings, Qt, QByteArray
+from PySide2.QtCore import QSettings, Qt
 from PySide2.QtWidgets import QMessageBox, QProgressDialog, QListWidgetItem, QFileDialog
 from dotted_dict import DottedDict
 

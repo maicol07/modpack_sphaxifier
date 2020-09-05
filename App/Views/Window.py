@@ -2,8 +2,8 @@ from PySide2.QtCore import QFile
 from PySide2.QtWidgets import QMainWindow, QDialog, QWizard
 
 import resources.resources
-from includes.helpers import path
 from includes.UiLoader import loadUi
+from includes.helpers import path
 
 
 def get_window(window_type='window'):
