@@ -261,7 +261,9 @@ class MainWindow(Window):
         progress_once = len(selected) / 20
 
         # Copy folders to a temp folder
-        for patch in selected:
+        for index, patch in enumerate(selected):
+            if not LICENSED and index == 9:
+                break
             dir_util.copy_tree(os.path.join(setting("patches_folder"), pack_version, pack_res, patch),
                                data(self.temp_folder_name + '/assets/' + patch))
             progress.setValue(progress.value() + progress_once)
