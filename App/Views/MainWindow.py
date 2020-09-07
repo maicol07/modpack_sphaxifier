@@ -219,6 +219,7 @@ class MainWindow(Window):
         for version, number in self.pack_formats.items():
             if pack_version <= version:
                 self.pack_mcmeta["pack_format"] = number
+                break
 
         self.pack_mcmeta['description'] = self.pack_mcmeta['description'].format(res=pack_res, name=pack_name,
                                                                                  author=setting('author'))
