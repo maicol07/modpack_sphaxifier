@@ -13,7 +13,7 @@ from dotted_dict import DottedDict
 from App.Views.CreditsEditor import CreditsEditor
 from App.Views.Settings import Settings
 from App.Views.Window import get_window
-from includes.helpers import data, setting, path
+from includes.helpers import data, setting, path, LICENSED
 
 Window = get_window()
 settings = QSettings()
@@ -44,13 +44,8 @@ class MainWindow(Window):
     def __init__(self):
         super().__init__('main')
 
-        # Start Button
-        self.pushButton_Start.clicked.connect(self.pack)
-
         # Combobox
-        # noinspection PyTypeChecker
-        self.comboBox_PackVersion.addItems(filter(lambda x: os.path.isdir(os.path.join(setting('patches_folder'), x)),
-                                                  os.listdir(setting('patches_folder'))))
+        self.load_versions()
         self.comboBox_PackVersion.currentTextChanged.connect(self.load_resolutions)
 
         self.load_resolutions(self.comboBox_PackVersion.currentText())
@@ -65,6 +60,10 @@ class MainWindow(Window):
         # Use lambda because of event parameter
         self.comboBox_Previous.currentTextChanged.connect(lambda: self.load_patches())
 
+        # Start Button
+        self.pushButton_Start.clicked.connect(self.pack)
+        self.pushButton_Reload.clicked.connect(self.reload)
+
         # Menu Bar
         self.actionExit.triggered.connect(self.close)
 
@@ -75,6 +74,29 @@ class MainWindow(Window):
         self.actionSupport.triggered.connect(lambda: webbrowser.open('https://maicol07.it/#contact'))
         self.actionAbout.triggered.connect(self.open_info)
         self.actionAbout_Qt.triggered.connect(lambda: QMessageBox.aboutQt(self, "About Qt"))
+
+    def reload(self):
+        """
+        Reload all
+        """
+        version = self.comboBox_PackVersion.currentText()
+        self.load_versions()
+        self.comboBox_PackVersion.setCurrentText(version)
+
+        res = self.comboBox_PackResolution.currentText()
+        self.load_resolutions(version)
+        self.comboBox_PackResolution.setCurrentText(res)
+
+        self.load_patches()
+
+    def load_versions(self):
+        """
+        Load pack versions
+        """
+        self.comboBox_PackVersion.clear()
+        # noinspection PyTypeChecker
+        self.comboBox_PackVersion.addItems(filter(lambda x: os.path.isdir(os.path.join(setting('patches_folder'), x)),
+                                                  os.listdir(setting('patches_folder'))))
 
     def load_resolutions(self, value):
         """
@@ -92,7 +114,7 @@ class MainWindow(Window):
 
     def load_patches(self, changed=False):
         """
-        (Re)load patches list
+        Load patches list
         """
         selected = []
         if changed:
