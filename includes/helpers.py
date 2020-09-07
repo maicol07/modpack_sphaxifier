@@ -21,7 +21,7 @@ def path(relative: str) -> str:
     :param relative: Relative path to transform to absolute
     :return:
     """
-    return os.path.join(ROOTDIR, relative)
+    return os.path.join(ROOT_DIR, relative)
 
 
 def data(uri='') -> str:
