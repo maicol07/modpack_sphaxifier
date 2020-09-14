@@ -1,6 +1,11 @@
+import os
 import sys
 
 from cx_Freeze import setup, Executable
+
+PYTHON_INSTALL_DIR = os.path.dirname(os.path.dirname(os.__file__))
+os.environ['TCL_LIBRARY'] = os.path.join(PYTHON_INSTALL_DIR, 'DLLs', 'tcl86t.dll')
+os.environ['TK_LIBRARY'] = os.path.join(PYTHON_INSTALL_DIR, 'DLLs', 'tk86t.dll')
 
 # Find version
 file = open('VERSION')
@@ -35,9 +40,11 @@ build_exe_options = {
         ('resources/KOMIKAX_.ttf', 'resources/KOMIKAX_.ttf'),
         ('resources/html', 'resources/html'),
         ('resources/img', r'resources/img'),
-        ('resources/views', r'resources/views')
+        ('resources/views', r'resources/views'),
+        (os.environ['TCL_LIBRARY'], os.path.join('lib', 'tcl86t.dll')),
+        (os.environ['TK_LIBRARY'], os.path.join('lib', 'tk86t.dll'))
     ],
-    "optimize": 0,
+    "optimize": 2,
     "build_exe": "build",
 }
 
