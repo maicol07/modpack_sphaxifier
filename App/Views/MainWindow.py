@@ -2,13 +2,14 @@ import json
 import os
 import shutil
 import webbrowser
-from distutils import file_util, dir_util
+from distutils import file_util, dir_util, errors
 from zipfile import ZipFile, ZIP_DEFLATED
 
 from PySide2 import QtWidgets
 from PySide2.QtCore import QSettings, Qt
 from PySide2.QtWidgets import QMessageBox, QProgressDialog, QListWidgetItem, QFileDialog
 from dotted_dict import DottedDict
+from packaging import version
 
 from App.Views.CreditsEditor import CreditsEditor
 from App.Views.Settings import Settings
@@ -238,8 +239,8 @@ class MainWindow(Window):
 
         # Find mcmeta pack_format
         pack_version = self.comboBox_PackVersion.currentText()
-        for version, number in self.pack_formats.items():
-            if pack_version <= version:
+        for v, number in self.pack_formats.items():
+            if version.parse(pack_version) <= version.parse(v):
                 self.pack_mcmeta["pack_format"] = number
                 break
 
