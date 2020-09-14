@@ -1,3 +1,7 @@
+"""
+Wizard controller
+"""
+
 from PySide2 import QtWidgets
 from PySide2.QtCore import QSettings, Qt
 from PySide2.QtGui import QPixmap

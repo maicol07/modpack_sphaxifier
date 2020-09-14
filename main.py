@@ -1,6 +1,7 @@
 """
 Main module
 """
+
 import sys
 
 import pyside_material

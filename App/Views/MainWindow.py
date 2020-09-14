@@ -1,3 +1,7 @@
+"""
+Main window controller
+"""
+
 import json
 import os
 import shutil

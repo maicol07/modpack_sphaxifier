@@ -1,3 +1,7 @@
+"""
+Window loader
+"""
+
 from PySide2.QtCore import QFile
 from PySide2.QtWidgets import QMainWindow, QDialog, QWizard
 

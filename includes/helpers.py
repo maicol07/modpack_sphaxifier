@@ -1,5 +1,5 @@
 """
-Utils scripts
+Helper functions
 """
 
 import os.path

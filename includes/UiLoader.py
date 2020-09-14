@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 # Copyright (c) 2011 Sebastian Wiesner <lunaryorn@gmail.com>
 # Modifications by Charl Botha <cpbotha@vxlabs.com>
@@ -100,8 +100,9 @@ class UiLoader(QUiLoader):
                 try:
                     widget = self.customWidgets[class_name](parent)
 
-                except (TypeError, KeyError) as e:
-                    raise Exception('No custom widget ' + class_name + ' found in customWidgets param of UiLoader __init__.')
+                except (TypeError, KeyError):
+                    raise Exception(
+                        'No custom widget ' + class_name + ' found in customWidgets param of UiLoader __init__.')
 
             if self.baseinstance:
                 # set an attribute for the new child widget on the base
@@ -110,7 +111,7 @@ class UiLoader(QUiLoader):
 
                 # this outputs the various widget names, e.g.
                 # sampleGraphicsView, dockWidget, samplesTableView etc.
-                #print(name)
+                # print(name)
 
             return widget
 

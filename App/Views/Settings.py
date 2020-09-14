@@ -1,3 +1,7 @@
+"""
+Settings Controller
+"""
+
 import pyside_material
 from PySide2 import QtWidgets
 from PySide2.QtCore import QSettings

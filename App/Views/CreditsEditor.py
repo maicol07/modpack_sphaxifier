@@ -1,3 +1,7 @@
+"""
+Credits Editor Controller
+"""
+
 import json
 import os
 

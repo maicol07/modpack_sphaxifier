@@ -1,3 +1,7 @@
+"""
+UI Stub Generator
+"""
+
 from __future__ import print_function
 
 import os
