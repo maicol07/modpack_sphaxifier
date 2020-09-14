@@ -283,7 +283,10 @@ class MainWindow(Window):
                                                    version=pack_version,
                                                    name=pack_name
                                                )), 'ZIP Archives (*.zip)')
-        archive = ZipFile(filename[0], 'w', ZIP_DEFLATED)  # strict_timestamps=False if Python >= 3.8
+        if not filename:
+            progress.cancel()
+        archive = ZipFile(filename[0], 'w', ZIP_DEFLATED,
+                          strict_timestamps=False)  # strict_timestamps=False if Python >= 3.8
         for root, dirs, files in os.walk(data(self.temp_folder_name)):
             for file in files:
                 path = os.path.join(root, file)
