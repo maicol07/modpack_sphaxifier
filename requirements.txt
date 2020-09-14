@@ -1,4 +1,4 @@
-PySide2~=5.14.2.3
+PySide2~=5.15.1
 requests~=2.24.0
 getmac~=0.8.2
 dotted-dict
