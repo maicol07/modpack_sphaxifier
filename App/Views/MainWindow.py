@@ -262,11 +262,15 @@ class MainWindow(Window):
         progress_once = len(selected) / 20
 
         # Copy folders to a temp folder
+        warnings = []
         for index, patch in enumerate(selected):
             if not LICENSED and index == 9:
                 break
-            dir_util.copy_tree(os.path.join(setting("patches_folder"), pack_version, pack_res, patch),
-                               data(self.temp_folder_name + '/assets/' + patch))
+            try:
+                dir_util.copy_tree(os.path.join(setting("patches_folder"), pack_version, pack_res, patch),
+                                   data(self.temp_folder_name + '/assets/' + patch))
+            except errors.DistutilsFileError as err:
+                warnings.append(str(err))
             progress.setValue(progress.value() + progress_once)
 
         progress.setValue(50)
@@ -320,7 +324,15 @@ class MainWindow(Window):
         progress.setValue(100)
         progress.setLabelText("Done!")
 
-        QMessageBox.information(progress, "Completed", "Pack created")
+        if not warnings:
+            QMessageBox.information(progress, "Completed", "Pack created")
+        else:
+            QMessageBox.warning(
+                progress,
+                "Completed with warnings",
+                "Pack was created but some warnings were occurred. "
+                "You may want to review these to add missing files manually: {}".format(";\n".join(warnings))
+            )
         progress.destroy()
 
     def open_info(self):
