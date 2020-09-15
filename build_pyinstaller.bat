@@ -1,4 +1,4 @@
-rem [WIP] 🚧 Work in progress.
+rem Pyinstaller
 pyinstaller -y ^
 --add-data VERSION;VERSION ^
 --add-data resources/html;resources/html ^
@@ -13,3 +13,6 @@ pyinstaller -y ^
 --noupx ^
 --windowed ^
 main.py
+
+rem Create setup with Inno Setup (Add install path to the system PATH)
+iscc build_exe.iss
