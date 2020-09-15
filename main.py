@@ -17,7 +17,7 @@ app.setApplicationVersion('1.0')
 
 from App.Views.MainWindow import MainWindow
 from App.Views.Wizard import Wizard
-from includes.helpers import setting
+from includes.helpers import setting, verify_license
 
 # Load style
 theme = setting('appearance/style')
@@ -34,6 +34,7 @@ if setting('patches_folder') is None:
     wizard = Wizard()
     wizard.show()
 else:
+    if setting('license_key'):
+        verify_license(setting('license_key'))
     MainWindow().show()
-
 app.exec_()

@@ -46,6 +46,7 @@ class Settings(Dialog):
         self.lineEdit_Author.setText(setting('pack_author'))
 
         # License verify
+        self.lineEdit_License.setText('license_key')
         if self.lineEdit_License.text():
             self.verify_license()
         self.pushButton_LicenseVerify.clicked.connect(self.verify_license)
@@ -80,6 +81,7 @@ class Settings(Dialog):
         settings.setValue('patches_folder', self.lineEdit_PatchesFolder.text())
         settings.setValue('pack_credits', self.lineEdit_Credits.text())
         settings.setValue('pack_author', self.lineEdit_Author.text())
+        settings.setValue('license_key', self.lineEdit_License.text())
 
         settings.sync()
 
@@ -94,6 +96,7 @@ class Settings(Dialog):
         self.lineEdit_PatchesFolder.clear()
         self.lineEdit_Credits.clear()
         self.lineEdit_Author.clear()
+        self.lineEdit_License.clear()
 
     def __stubs(self):
         """ This just enables code completion. It should never be called """
