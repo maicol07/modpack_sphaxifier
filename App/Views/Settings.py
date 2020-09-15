@@ -46,7 +46,7 @@ class Settings(Dialog):
         self.lineEdit_Author.setText(setting('pack_author'))
 
         # License verify
-        self.lineEdit_License.setText('license_key')
+        self.lineEdit_License.setText(setting('license_key'))
         if self.lineEdit_License.text():
             self.verify_license()
         self.pushButton_LicenseVerify.clicked.connect(self.verify_license)
