@@ -9,7 +9,6 @@ import requests
 from PySide2.QtCore import QSettings
 from PySide2.QtWidgets import QFileDialog, QMessageBox
 from dotted_dict import DottedDict
-from getmac import get_mac_address
 
 from includes.variables import *
 
@@ -80,8 +79,7 @@ def verify_license(license_key, status_label=None, parent=None):
     """
     r = requests.post('https://maicol07.it/license_server/verify.php', {
         'sub_id': license_key,
-        'uuid': get_mac_address(),
-        'product_id': 'modpack_sphaxifier'
+        'uuid': setting('uuid')
     })
     response = DottedDict(r.json())
     if response.success:
@@ -105,6 +103,7 @@ def verify_license(license_key, status_label=None, parent=None):
             LICENSED = True
         else:
             LICENSED = False
+        settings.setValue('uuid', response.uuid)
     else:
         QMessageBox.critical(parent, 'Error while verifying your license', response.error)
         status_label.setText('''

@@ -221,7 +221,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Verifica</string>
+    <string>Check</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_LicenseStatus">
