@@ -5,7 +5,7 @@ Window loader
 from PySide2.QtCore import QFile
 from PySide2.QtWidgets import QMainWindow, QDialog, QWizard
 
-import resources.resources
+import resources
 from includes.UiLoader import loadUi
 from includes.helpers import path
 
