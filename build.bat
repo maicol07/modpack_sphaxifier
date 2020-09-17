@@ -1,6 +1,6 @@
 rem Pyinstaller
 pyinstaller -y ^
---add-data VERSION;. ^
+--version-file version.rc ^
 --add-data resources/html;resources/html ^
 --add-data resources/KOMIKAX_.ttf;resources/KOMIKAX_.ttf ^
 --add-data resources/img;resources/img ^

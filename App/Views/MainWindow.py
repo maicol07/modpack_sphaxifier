@@ -11,14 +11,14 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 from PySide2 import QtWidgets
 from PySide2.QtCore import QSettings, Qt
-from PySide2.QtWidgets import QMessageBox, QProgressDialog, QListWidgetItem, QFileDialog
+from PySide2.QtWidgets import QMessageBox, QProgressDialog, QListWidgetItem, QFileDialog, QApplication
 from dotted_dict import DottedDict
 from packaging import version
 
 from App.Views.CreditsEditor import CreditsEditor
 from App.Views.Settings import Settings
 from App.Views.Window import get_window
-from includes.helpers import data, setting, path, LICENSED
+from includes.helpers import data, setting, LICENSED
 
 Window = get_window()
 settings = QSettings()
@@ -344,11 +344,11 @@ class MainWindow(Window):
         Opens the info dialog
         """
         html = open("resources/html/about.html")
-        version = open(path('VERSION'))
-
-        QMessageBox.about(self, "About Modpack Sphaxifier", html.read().format(version=version.read().strip()))
-
-        version.close()
+        QMessageBox.about(
+            self,
+            "About Modpack Sphaxifier",
+            html.read().format(version=QApplication.instance().applicationVersion())
+        )
         html.close()
 
     def __stubs(self):

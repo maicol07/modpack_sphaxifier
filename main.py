@@ -13,9 +13,7 @@ app = QApplication(sys.argv)
 app.setOrganizationName('Maicol07')
 app.setOrganizationDomain('maicol07.it')
 app.setApplicationName('Modpack Sphaxifier')
-version = open('VERSION')
-app.setApplicationVersion(version.read())
-version.close()
+app.setApplicationVersion('1.0.1')
 
 from App.Views.MainWindow import MainWindow
 from App.Views.Wizard import Wizard

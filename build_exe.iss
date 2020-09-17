@@ -3,11 +3,7 @@
 #define AppPublisher "Maicol07"
 #define AppURL "https://maicol07.it"
 #define AppExeName "main.exe"
-;Version
-#define VerFile FileOpen("VERSION")
-#define AppVersion FileRead(VerFile)
-#expr FileClose(VerFile)
-#undef VerFile
+#define AppVersion GetFileVersion("dist\main\main.exe")
 
 [Setup]
 AppId={{0767A424-BA1A-40C7-AC4F-FD61B59C9063}
@@ -37,7 +33,7 @@ VersionInfoProductName={#AppName}
 VersionInfoProductVersion={#AppVersion}
 AppContact=maicolbattistini@live.it
 AppReadmeFile=README.md
-PrivilegesRequired=poweruser
+PrivilegesRequired=admin
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -49,7 +45,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 [Files]
 Source: "D:\Maicol\Documents\Progetti\Windows\Modpack_Sphaxifier\dist\main\main.exe"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: "dist\main\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs
+Source: "dist\main\*"; DestDir: "{app}"; Flags: createallsubdirs recursesubdirs overwritereadonly replacesameversion
 
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExeName}"
