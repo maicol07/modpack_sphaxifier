@@ -30,7 +30,7 @@ if font:
     # noinspection PyTypeChecker
     app.setFont(QFont(font, 8))
 
-if setting('patches_folder') is None:
+if not setting('patches_folder'):
     wizard = Wizard()
     wizard.show()
 else:
