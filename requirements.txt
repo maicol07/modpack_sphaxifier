@@ -1,5 +1,5 @@
 PySide2~=5.15.1
-requests~=2.24.0
+requests~=2.31.0
 pyside-material
 dotted-dict
 packaging
